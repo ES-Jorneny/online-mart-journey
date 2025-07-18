@@ -117,7 +117,7 @@ class WelcomeScreen extends StatelessWidget {
                         Icon(Icons.email, color: Colors.white),
                         TextButton(
                           onPressed: () {
-                            Get.offNamed("/login");
+                            Get.toNamed("/login");
                           },
                           child: Text(
                             "Sign in with email",
