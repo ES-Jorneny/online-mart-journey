@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:lottie/lottie.dart';
+import 'package:online_mart_journey_app/controllers/google_sign_in_controller.dart';
 import '../../../utils/app_constants.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({super.key});
+  WelcomeScreen({super.key});
+
+  final GoogleSignInController _googleSignInController = Get.put(
+    GoogleSignInController(),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +88,10 @@ class WelcomeScreen extends StatelessWidget {
                       children: [
                         Brand(Brands.google),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            _googleSignInController.signIn();
+
+                          },
                           child: Text(
                             "Sign in with google",
                             style: TextStyle(

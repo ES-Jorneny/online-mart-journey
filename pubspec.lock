@@ -57,6 +57,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.2"
+  cloud_firestore:
+    dependency: "direct main"
+    description:
+      name: cloud_firestore
+      sha256: "39be8bf17e55d1211d8e2142ba1551bbcf30e272fe90adb36d54a9b1ae97bd30"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.6.11"
+  cloud_firestore_platform_interface:
+    dependency: transitive
+    description:
+      name: cloud_firestore_platform_interface
+      sha256: a8a1ce4f8da07225b8fe37ee3eeff3bde019e0607bab93329091f5491ee2f62f
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.6.11"
+  cloud_firestore_web:
+    dependency: transitive
+    description:
+      name: cloud_firestore_web
+      sha256: a3c0c5913860abfa0c9af68e245feb24d51ffebf07910780efc0d01ac463dc92
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.4.11"
   collection:
     dependency: transitive
     description:
@@ -150,6 +174,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_easyloading:
+    dependency: "direct main"
+    description:
+      name: flutter_easyloading
+      sha256: ba21a3c883544e582f9cc455a4a0907556714e1e9cf0eababfcb600da191d17c
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.5"
   flutter_keyboard_visibility:
     dependency: "direct main"
     description:
@@ -206,6 +238,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
+  flutter_spinkit:
+    dependency: transitive
+    description:
+      name: flutter_spinkit
+      sha256: d2696eed13732831414595b98863260e33e8882fc069ee80ec35d4ac9ddb0472
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.2.1"
   flutter_svg:
     dependency: transitive
     description:
@@ -232,6 +272,46 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.7.2"
+  google_sign_in:
+    dependency: "direct main"
+    description:
+      name: google_sign_in
+      sha256: "821f354c053d51a2d417b02d42532a19a6ea8057d2f9ebb8863c07d81c98aaf9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.4.4"
+  google_sign_in_android:
+    dependency: transitive
+    description:
+      name: google_sign_in_android
+      sha256: d5e23c56a4b84b6427552f1cf3f98f716db3b1d1a647f16b96dbb5b93afa2805
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.2.1"
+  google_sign_in_ios:
+    dependency: transitive
+    description:
+      name: google_sign_in_ios
+      sha256: "102005f498ce18442e7158f6791033bbc15ad2dcc0afa4cf4752e2722a516c96"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.9.0"
+  google_sign_in_platform_interface:
+    dependency: transitive
+    description:
+      name: google_sign_in_platform_interface
+      sha256: "5f6f79cf139c197261adb6ac024577518ae48fdff8e53205c5373b5f6430a8aa"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.5.0"
+  google_sign_in_web:
+    dependency: transitive
+    description:
+      name: google_sign_in_web
+      sha256: "75cc41ebc53b1756320ee14d9c3018ad3e6cea298147dbcd86e9d0c8d6720b40"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.10.2+1"
   http:
     dependency: transitive
     description:
@@ -256,6 +336,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
+  js:
+    dependency: transitive
+    description:
+      name: js
+      sha256: f2c445dce49627136094980615a031419f7f3eb393237e4ecd97ac15dea343f3
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.7"
   leak_tracker:
     dependency: transitive
     description:

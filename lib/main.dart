@@ -1,10 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:online_mart_journey_app/presentation/auth/screens/login_screen.dart';
 import 'package:online_mart_journey_app/presentation/auth/screens/signup_screen.dart';
 import 'package:online_mart_journey_app/presentation/auth/screens/splash_screen.dart';
 import 'package:online_mart_journey_app/presentation/auth/screens/welcome_screen.dart';
+import 'package:online_mart_journey_app/presentation/user_panel/screens/home_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,12 +23,14 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Online Mart Journey',
       debugShowCheckedModeBanner: false,
+      builder: EasyLoading.init(),
       initialRoute: "/",
       getPages: [
         GetPage(name: "/", page: () => SplashScreen()),
         GetPage(name: "/welcome", page: () => WelcomeScreen()),
         GetPage(name: "/login", page: () => LoginScreen()),
         GetPage(name: "/signUp", page: () => SignupScreen()),
+        GetPage(name: "/home", page: ()=>HomeScreen())
       ],
     );
   }

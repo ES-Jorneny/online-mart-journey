@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:online_mart_journey_app/services/auth/auth_services.dart';
 
 import '../../../utils/app_constants.dart';
 
@@ -65,6 +66,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void navigateToNextScreen()async{
     await Future.delayed(Duration(seconds: 3));
-    Get.offNamed("/welcome");
+    await AuthServices().isUserLoggedIn()? Get.offAllNamed("/home"):Get.offAllNamed("/welcome");
   }
 }
