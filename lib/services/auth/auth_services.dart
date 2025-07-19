@@ -2,18 +2,25 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:online_mart_journey_app/controllers/auth/get_device_token_controller.dart';
 import 'package:online_mart_journey_app/models/user_model.dart';
 import 'package:online_mart_journey_app/services/database/firestore_services.dart';
 
 class AuthServices {
+
+
   // ✅ Correct way to initialize in latest version
   final GoogleSignIn googleSignIn = GoogleSignIn();
+  final GetDeviceTokenController getDeviceTokenController=Get.put(GetDeviceTokenController());
 
   // Firebase Auth
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final getCurrentUser=FirebaseAuth.instance.currentUser!.uid;
 
   // Sign In with Google
   Future<void> signInWithGoogle() async {
+
+
     try {
       // Account signIn
       final GoogleSignInAccount? googleSignInAccount = await googleSignIn
@@ -39,7 +46,7 @@ class AuthServices {
             email: user.email.toString(),
             phone: user.phoneNumber.toString(),
             userImgUrl: user.photoURL.toString(),
-            userDeviceToken: "",
+            userDeviceToken: getDeviceTokenController.deviceToken.toString(),
             country: "",
             userAddress: "",
             street: "",
@@ -59,19 +66,16 @@ class AuthServices {
   }
 
   // Sign In with email
-  Future<void> signInWithEmail(String email, String password) async {
+  Future<UserCredential?> signInWithEmail(String email, String password) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      // ✅ Check if email is verified
       if (userCredential.user != null && userCredential.user!.emailVerified) {
-        Get.offAllNamed("/home");
-        // Proceed to home screen
+        return userCredential; // ✅ Don't navigate here
       } else {
-        // Sign out and warn
         await _auth.signOut();
         Get.snackbar("Error", "Please verify your email before sign In");
         throw FirebaseAuthException(
@@ -87,6 +91,7 @@ class AuthServices {
       rethrow;
     }
   }
+
 
 
   // Sign Up with Email
@@ -113,7 +118,7 @@ class AuthServices {
         email: email,
         phone: phone,
         userImgUrl: "",
-        userDeviceToken: "",
+        userDeviceToken: getDeviceTokenController.deviceToken.toString(),
         country: "",
         userAddress: "",
         street: "",

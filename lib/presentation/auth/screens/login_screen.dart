@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:online_mart_journey_app/controllers/auth/get_user_data_controller.dart';
+import 'package:online_mart_journey_app/models/user_model.dart';
 import 'package:online_mart_journey_app/presentation/auth/widgets/text_field_widget.dart';
 import 'package:online_mart_journey_app/utils/app_constants.dart';
 
@@ -21,7 +24,11 @@ class _LoginScreenState extends State<LoginScreen> {
   final EmailSignInController emailSignInController = Get.put(
     EmailSignInController(),
   );
-  bool _isObscure=true;
+  final GetUserDataController getUserDataController = Get.put(
+    GetUserDataController(),
+  );
+
+  bool _isObscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               children: [
                 AppBar(
-                  iconTheme: IconThemeData(
-                      color: Colors.white
-                  ),
+                  iconTheme: IconThemeData(color: Colors.white),
                   title: Text("Sign In", style: TextStyle(color: appTextColor)),
                   backgroundColor: appMainColor,
                   centerTitle: true,
@@ -57,7 +62,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ValueDelegate.color(
                                     const ['**'],
                                     // or ['Shape Layer 1', 'Fill 1'] – exact path of the layer
-                                    value: appMainColor, // 👈 your desired color
+                                    value:
+                                        appMainColor, // 👈 your desired color
                                   ),
                                 ],
                               ),
@@ -72,13 +78,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextFieldWidget(
                         controller: _passwordController,
                         icon: Icons.password,
-                        onPressed: (){
-                          if(_isObscure){
+                        onPressed: () {
+                          if (_isObscure) {
                             setState(() {
-                              _isObscure=false;
+                              _isObscure = false;
                             });
-                          }else{
-                            _isObscure=true;
+                          } else {
+                            _isObscure = true;
                           }
                         },
                         hintText: "Password",
@@ -86,36 +92,68 @@ class _LoginScreenState extends State<LoginScreen> {
                         isObscure: _isObscure,
                       ),
                       GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           Get.toNamed("/forget");
                         },
                         child: Container(
-                          margin: EdgeInsets.only(right: Get.width*0.06),
+                          margin: EdgeInsets.only(right: Get.width * 0.06),
                           alignment: Alignment.topRight,
-                          child: Text("Forget Password?",style: TextStyle(
-                            color: appMainColor,
-                            fontWeight: FontWeight.w500
-                          ),),
+                          child: Text(
+                            "Forget Password?",
+                            style: TextStyle(
+                              color: appMainColor,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                         ),
                       ),
-                      SizedBox(height: Get.height *0.03),
+                      SizedBox(height: Get.height * 0.03),
                       Container(
                         width: Get.width * 0.9,
-                        padding: EdgeInsets.symmetric(vertical: Get.height * 0.005),
+                        padding: EdgeInsets.symmetric(
+                          vertical: Get.height * 0.005,
+                        ),
                         decoration: BoxDecoration(
                           color: appMainColor,
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: TextButton(
-                          onPressed: () {
-                            if(_emailController.text.isEmpty|| _passwordController.text.isEmpty){
-                              Get.snackbar("Message", "Please fill required fields",snackPosition: SnackPosition.BOTTOM);
-                            }
-                            else{
-                              emailSignInController.signIn(_emailController.text, _passwordController.text);
-                            }
+                          onPressed: () async {
+                            if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+                              Get.snackbar("Message", "Please fill required fields");
+                            } else {
+                              try {
+                                // ✅ 1. Sign in
+                                UserCredential? userCredential = await emailSignInController.signIn(
+                                  _emailController.text.trim(),
+                                  _passwordController.text.trim(),
+                                );
 
+                                if (userCredential != null) {
+                                  final uid = userCredential.user!.uid;
+
+                                  // ✅ 2. Use controller to get user data (NOT direct firestore)
+                                  final UserModel? userModel = await getUserDataController.getUser(uid);
+
+                                  if (userModel != null) {
+                                    // ✅ 3. Navigate according to isAdmin
+                                    if (userModel.isAdmin) {
+                                      Get.offAllNamed("/adminPanel");
+                                    } else {
+                                      Get.offAllNamed("/home");
+                                    }
+                                  } else {
+                                    Get.snackbar("Error", "User data not found.");
+                                  }
+                                }
+                              } catch (e) {
+                                print("Login error: $e");
+                                Get.snackbar("Error", e.toString());
+                              }
+                            }
                           },
+
+
                           child: Text(
                             "Sign In ",
                             style: TextStyle(
@@ -126,7 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       Container(
-                           margin: EdgeInsets.only(top: Get.height *0.04),
+                        margin: EdgeInsets.only(top: Get.height * 0.04),
                         child: RichText(
                           text: TextSpan(
                             children: [
@@ -140,7 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               TextSpan(
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                  Get.toNamed("/signUp");
+                                    Get.toNamed("/signUp");
                                   },
                                 text: "Sign Up",
                                 style: TextStyle(
@@ -153,9 +191,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                       ),
-
-
-
                     ],
                   ),
                 ),

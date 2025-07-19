@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:online_mart_journey_app/services/auth/auth_services.dart';
 
+import '../../../controllers/auth/get_user_data_controller.dart';
 import '../../../utils/app_constants.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -14,6 +15,9 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final GetUserDataController getUserDataController = Get.put(
+    GetUserDataController(),
+  );
 
   @override
   void initState() {
@@ -64,8 +68,32 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  void navigateToNextScreen()async{
+  void navigateToNextScreen() async {
     await Future.delayed(Duration(seconds: 3));
-    await AuthServices().isUserLoggedIn()? Get.offAllNamed("/home"):Get.offAllNamed("/welcome");
+
+    final isLoggedIn = await AuthServices().isUserLoggedIn();
+
+    if (!isLoggedIn) {
+      Get.offAllNamed("/welcome");
+    } else {
+      // ✅ User is logged in, get UID
+      final uid = AuthServices().getCurrentUser;
+
+      // ✅ Get user data from controller
+      final userModel = await getUserDataController.getUser(uid);
+
+      if (userModel != null) {
+        if (userModel.isAdmin) {
+          Get.offAllNamed("/adminPanel");
+        } else {
+          Get.offAllNamed("/home");
+        }
+      } else {
+        // User document not found
+        Get.snackbar("Error", "User data not found!");
+        Get.offAllNamed("/welcome");
+      }
+    }
   }
+
 }

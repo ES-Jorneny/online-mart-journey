@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 import '../../services/auth/auth_services.dart';
@@ -22,12 +23,13 @@ class EmailSignInController extends GetxController {
     }
   }
 
-  Future<void> signIn(String email,String password) async{
+  Future<UserCredential?> signIn(String email,String password) async{
     try{
-      _authServices.signInWithEmail(email, password);
-      Get.snackbar("Success", "Login Successfully",snackPosition: SnackPosition.BOTTOM);
+   return  _authServices.signInWithEmail(email, password);
+
     }catch(e){
       Get.snackbar("Error", e.toString(),snackPosition: SnackPosition.BOTTOM);
+      return null;
     }
   }
 
