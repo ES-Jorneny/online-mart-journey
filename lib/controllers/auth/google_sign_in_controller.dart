@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:online_mart_journey_app/services/auth/auth_services.dart';
 
 class GoogleSignInController extends GetxController {
@@ -12,7 +11,6 @@ class GoogleSignInController extends GetxController {
   Future<void> signIn() async {
     try {
       await _authServices.signInWithGoogle();
-
 
         Get.snackbar("Success", "Signed in  successfully",snackPosition: SnackPosition.BOTTOM);
         Get.offAllNamed("/home");

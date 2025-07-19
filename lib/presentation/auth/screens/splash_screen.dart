@@ -76,11 +76,14 @@ class _SplashScreenState extends State<SplashScreen> {
     if (!isLoggedIn) {
       Get.offAllNamed("/welcome");
     } else {
-      // ✅ User is logged in, get UID
-      final uid = AuthServices().getCurrentUser;
+      final user = AuthServices().getCurrentUser;
 
-      // ✅ Get user data from controller
-      final userModel = await getUserDataController.getUser(uid);
+      if (user == null) {
+        Get.offAllNamed("/welcome");
+        return;
+      }
+
+      final userModel = await getUserDataController.getUser(user);
 
       if (userModel != null) {
         if (userModel.isAdmin) {
@@ -89,11 +92,11 @@ class _SplashScreenState extends State<SplashScreen> {
           Get.offAllNamed("/home");
         }
       } else {
-        // User document not found
         Get.snackbar("Error", "User data not found!");
         Get.offAllNamed("/welcome");
       }
     }
   }
+
 
 }

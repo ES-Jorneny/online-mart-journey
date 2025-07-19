@@ -15,7 +15,7 @@ class AuthServices {
 
   // Firebase Auth
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final getCurrentUser=FirebaseAuth.instance.currentUser!.uid;
+  final getCurrentUser=FirebaseAuth.instance.currentUser?.uid;
 
   // Sign In with Google
   Future<void> signInWithGoogle() async {
@@ -175,6 +175,7 @@ class AuthServices {
     // Firebase Sign-out (always do this)
     await _auth.signOut();
   }
+
 
   // checkUser
   Future<bool> isUserLoggedIn() async {
