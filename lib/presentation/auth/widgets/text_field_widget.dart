@@ -27,6 +27,7 @@ class TextFieldWidget extends StatelessWidget {
       width: Get.width,
       padding: EdgeInsets.all(10),
       child: TextFormField(
+        controller: controller,
         obscureText: isObscure ?? false,
         cursorColor: appMainColor,
         keyboardType: inputType,

@@ -6,6 +6,8 @@ import 'package:lottie/lottie.dart';
 import 'package:online_mart_journey_app/presentation/auth/widgets/text_field_widget.dart';
 import 'package:online_mart_journey_app/utils/app_constants.dart';
 
+import '../../../controllers/auth/email_sign_in_controller.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -16,6 +18,10 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final EmailSignInController emailSignInController = Get.put(
+    EmailSignInController(),
+  );
+  bool _isObscure=true;
 
   @override
   Widget build(BuildContext context) {
@@ -66,17 +72,31 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextFieldWidget(
                         controller: _passwordController,
                         icon: Icons.password,
+                        onPressed: (){
+                          if(_isObscure){
+                            setState(() {
+                              _isObscure=false;
+                            });
+                          }else{
+                            _isObscure=true;
+                          }
+                        },
                         hintText: "Password",
                         inputType: TextInputType.visiblePassword,
-                        isObscure: true,
+                        isObscure: _isObscure,
                       ),
-                      Container(
-                        margin: EdgeInsets.only(right: Get.width*0.06),
-                        alignment: Alignment.topRight,
-                        child: Text("Forget Password?",style: TextStyle(
-                          color: appMainColor,
-                          fontWeight: FontWeight.w500
-                        ),),
+                      GestureDetector(
+                        onTap: (){
+                          Get.toNamed("/forget");
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(right: Get.width*0.06),
+                          alignment: Alignment.topRight,
+                          child: Text("Forget Password?",style: TextStyle(
+                            color: appMainColor,
+                            fontWeight: FontWeight.w500
+                          ),),
+                        ),
                       ),
                       SizedBox(height: Get.height *0.03),
                       Container(
@@ -88,6 +108,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         child: TextButton(
                           onPressed: () {
+                            if(_emailController.text.isEmpty|| _passwordController.text.isEmpty){
+                              Get.snackbar("Message", "Please fill required fields",snackPosition: SnackPosition.BOTTOM);
+                            }
+                            else{
+                              emailSignInController.signIn(_emailController.text, _passwordController.text);
+                            }
 
                           },
                           child: Text(

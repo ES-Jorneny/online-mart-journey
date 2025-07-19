@@ -23,7 +23,7 @@ class GoogleSignInController extends GetxController {
       // current user
       currentUser.value = FirebaseAuth.instance.currentUser;
       if (currentUser.value != null) {
-        Get.snackbar("Success", "Signed in as ${currentUser.value?.displayName}");
+        Get.snackbar("Success", "Signed in as ${currentUser.value?.displayName}",snackPosition: SnackPosition.BOTTOM);
         Get.offAllNamed("/home");
       }
     } catch (e) {

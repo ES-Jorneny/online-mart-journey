@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 
-import '../../../controllers/google_sign_in_controller.dart';
+import '../../../controllers/auth/google_sign_in_controller.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});

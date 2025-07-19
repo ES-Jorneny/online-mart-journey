@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:lottie/lottie.dart';
-import 'package:online_mart_journey_app/controllers/google_sign_in_controller.dart';
+import 'package:online_mart_journey_app/controllers/auth/google_sign_in_controller.dart';
 import '../../../utils/app_constants.dart';
 
 class WelcomeScreen extends StatelessWidget {

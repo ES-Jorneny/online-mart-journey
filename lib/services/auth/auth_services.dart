@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:online_mart_journey_app/models/user_model.dart';
 import 'package:online_mart_journey_app/services/database/firestore_services.dart';
@@ -67,10 +68,12 @@ class AuthServices {
 
       // ✅ Check if email is verified
       if (userCredential.user != null && userCredential.user!.emailVerified) {
+        Get.offAllNamed("/home");
         // Proceed to home screen
       } else {
         // Sign out and warn
         await _auth.signOut();
+        Get.snackbar("Error", "Please verify your email before sign In");
         throw FirebaseAuthException(
           code: 'email-not-verified',
           message: 'Please verify your email before signing in.',
@@ -94,6 +97,8 @@ class AuthServices {
       String phone,
       ) async {
     try {
+      // Loading start
+      EasyLoading.show(status: "Please wait...");
       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
@@ -101,7 +106,7 @@ class AuthServices {
 
       // Send verification email
       await userCredential.user!.sendEmailVerification();
-
+      // add user data on user model
       UserModel userModel = UserModel(
         uid: userCredential.user!.uid,
         username: username,
@@ -118,15 +123,34 @@ class AuthServices {
       );
 
       await FirestoreServices().addUser(userModel);
+      // Loading start
+      EasyLoading.dismiss();
     } on FirebaseAuthException catch (e) {
+      EasyLoading.dismiss();
       // Show error message
       print("Signup error: ${e.message}");
       rethrow; // ya handle with Get.snackbar
     } catch (e) {
+      EasyLoading.dismiss();
       print("Unexpected error: $e");
       rethrow;
     }
   }
+
+  // Forget Password
+  Future<void> forgetPassword(String email)async{
+    try{
+      EasyLoading.show(status: "Please wait");
+     await _auth.sendPasswordResetEmail(email: email);
+      Get.snackbar("Request sent successfully", "password reset link sent to your email",snackPosition: SnackPosition.BOTTOM);
+     EasyLoading.dismiss();
+    }on FirebaseAuthException catch(e){
+      EasyLoading.dismiss();
+      print("Unexpected error: $e");
+      Get.snackbar("Error", e.toString(),snackPosition: SnackPosition.BOTTOM);
+    }
+  }
+
 
 
   // SignOut
