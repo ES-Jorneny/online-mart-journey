@@ -3,10 +3,11 @@ import 'package:online_mart_journey_app/models/user_model.dart';
 
 class FirestoreServices {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
+  /// Add User
   Future<void> addUser(UserModel userModel) async {
    await _firestore.collection("users").doc(userModel.uid).set(userModel.toJson());
   }
+  /// Fetch User based on Id
   Future<UserModel?> getUser(String uId) async {
     final snapshot = await _firestore
         .collection("users")
@@ -20,5 +21,15 @@ class FirestoreServices {
       return null;
     }
   }
+
+  /// Fetch category
+Future<QuerySnapshot> getCategories() async{
+    return await _firestore.collection("categories").get();
+}
+/// Fetch  Sale Product
+Future<QuerySnapshot> getSaleProducts()async{
+    return await _firestore.collection("products").where("isSale",isEqualTo: true).get();
+}
+
 
 }
