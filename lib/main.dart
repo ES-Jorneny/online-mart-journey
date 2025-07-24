@@ -8,7 +8,11 @@ import 'package:online_mart_journey_app/presentation/auth/screens/login_screen.d
 import 'package:online_mart_journey_app/presentation/auth/screens/signup_screen.dart';
 import 'package:online_mart_journey_app/presentation/auth/screens/splash_screen.dart';
 import 'package:online_mart_journey_app/presentation/auth/screens/welcome_screen.dart';
+import 'package:online_mart_journey_app/presentation/user_panel/screens/all_categories_screen.dart';
+import 'package:online_mart_journey_app/presentation/user_panel/screens/all_flash_sale_products.dart';
+import 'package:online_mart_journey_app/presentation/user_panel/screens/all_product_screen.dart';
 import 'package:online_mart_journey_app/presentation/user_panel/screens/home_screen.dart';
+import 'package:online_mart_journey_app/presentation/user_panel/screens/single_category_product_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +38,11 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/signUp", page: () => SignupScreen()),
         GetPage(name: "/home", page: ()=>HomeScreen()),
         GetPage(name: "/forget", page: ()=>ForgetPasswordScreen()),
-        GetPage(name: "/adminPanel", page: ()=>AdminPanel())
+        GetPage(name: "/adminPanel", page: ()=>AdminPanel()),
+        GetPage(name: "/allCategories", page: ()=>AllCategoriesScreen()),
+        GetPage(name: "/singleCategoryProduct", page: ()=>SingleCategoryProductScreen()),
+        GetPage(name: "/allFlashProducts", page: ()=>AllFlashSaleProducts()),
+        GetPage(name: "/allProducts", page: ()=>AllProductScreen())
       ],
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:online_mart_journey_app/presentation/user_panel/widgets/all_product_widgets.dart';
 import 'package:online_mart_journey_app/presentation/user_panel/widgets/banner_widget.dart';
 import 'package:online_mart_journey_app/presentation/user_panel/widgets/category_widget.dart';
 import 'package:online_mart_journey_app/presentation/user_panel/widgets/custom_drawer_widget.dart';
@@ -48,7 +49,7 @@ class HomeScreen extends StatelessWidget {
                headingSubtitle: "According to your budget",
                buttonText: "See more >",
                onTap: (){
-
+              Get.toNamed("/allCategories");
                },
              ),
               CategoryWidget(),
@@ -57,10 +58,19 @@ class HomeScreen extends StatelessWidget {
                 headingSubtitle: "According to your budget",
                 buttonText: "See more >",
                 onTap: (){
-
+              Get.toNamed("/allFlashProducts");
                 },
               ),
-              FlashSaleWidget()
+              FlashSaleWidget(),
+              HeadingWidget(
+                headingTitle: "All Products",
+                headingSubtitle: "According to your budget",
+                buttonText: "See more >",
+                onTap: (){
+              Get.toNamed("/allProducts");
+                },
+              ),
+              AllProductWidgets()
 
             ],
           ),

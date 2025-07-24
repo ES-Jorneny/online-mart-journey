@@ -41,31 +41,38 @@ class CategoryWidget extends StatelessWidget {
                   createdAt: snapshot.data!.docs[index]["createdAt"],
                   updatedAt: snapshot.data!.docs[index]["updatedAt"],
                 );
-                return Padding(
-                  padding: EdgeInsets.all(5),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1), // adjust opacity
-                          blurRadius: 6,
-                          offset: Offset(2, 4), // X, Y shadow offset
-                        ),
-                      ],
-                    ),
-                    child: FillImageCard(
-                      width: Get.width/4,
-                      heightImage: Get.height/12,
-                      imageProvider: CachedNetworkImageProvider(
-                        categoryModel.categoryImg,
+                return GestureDetector(
+                  onTap: (){
+                    Get.toNamed("/singleCategoryProduct",arguments: {
+                      "categoryId": categoryModel.categoryId,
+                    });
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.all(5),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1), // adjust opacity
+                            blurRadius: 6,
+                            offset: Offset(2, 4), // X, Y shadow offset
+                          ),
+                        ],
                       ),
-                      title: Center(
-                        child: Text(categoryModel.categoryName,style: TextStyle(
-                          fontSize: 12
+                      child: FillImageCard(
+                        width: Get.width/4,
+                        heightImage: Get.height/12,
+                        imageProvider: CachedNetworkImageProvider(
+                          categoryModel.categoryImg,
                         ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
+                        title: Center(
+                          child: Text(categoryModel.categoryName,style: TextStyle(
+                            fontSize: 12
+                          ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                          ),
                         ),
                       ),
                     ),

@@ -30,6 +30,15 @@ Future<QuerySnapshot> getCategories() async{
 Future<QuerySnapshot> getSaleProducts()async{
     return await _firestore.collection("products").where("isSale",isEqualTo: true).get();
 }
+/// Fetch product based on category
+  Future<QuerySnapshot> getSaleProductsBasedOnCategory(String categoryId)async{
+    return await _firestore.collection("products").where("categoryId",isEqualTo: categoryId).get();
+  }
+
+  /// Fetch  All Product
+  Future<QuerySnapshot> getAllProducts()async{
+    return await _firestore.collection("products").get();
+  }
 
 
 }
